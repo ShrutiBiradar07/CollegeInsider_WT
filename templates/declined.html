@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Declined Reviews</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/WT Website logo.png') }}" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Add your CSS styles here */
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #f0f0f0; /* Choose the background color you prefer */
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.review-card {
+    cursor: grabbing;
+    border: solid 4px #333; /* Darker border color for better contrast */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin: 20px;
+    width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #3498db, #856e7f);
+    color: #fff; /* White text color for better visibility */
+    transition: transform 0.2s;
+}
+
+.review-card:hover {
+    transform: scale(1.02);
+}
+
+.review-card h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff; /* White text color for heading */
+}
+
+.review-card p {
+    margin: 8px 0;
+    color: rgba(0, 0, 0, 0.692); /* Lighter text color for paragraphs */
+    font-style: italic;
+    text-align: justify;
+}
+
+.star-rating {
+    color: #ffcc00; /* Bright yellow for star rating */
+    font-size: 24px;
+}
+
+.profile-icon {
+    font-size: 24px;
+    margin-right: 5px;
+}
+
+.para {
+    margin-bottom: 200px;
+}
+
+        .approve-button {
+            background-color: rgba(255, 0, 0, 0.432);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+       /* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    margin: 5% auto;
+    display: block;
+    max-width: 80%;
+    max-height: 80%;
+    cursor: grabbing;
+}
+
+.modal-image {
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    width: auto;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #fff;
+    font-size: 40px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .modal-content {
+        max-width: 90%;
+        max-height: 90%;
+    }
+
+    .modal-image {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+.download-button {
+    background: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.download-button i {
+    margin-right: 5px;
+}
+    </style>
+</head>
+<body>
+    <h1 align="center">College Reviews</h1>
+    <div class="card-container">
+        {% for review in reviews %}
+        {% if review.declined %}
+        <div class="review-card">
+            <h2 align="center" style="color: black;">{{ review.college }}</h2>
+            <!-- <p><i class="fa fa-user profile-icon"></i> Anonymous</p> -->
+            <p><strong>Name:</strong> {{ review.reviewer_name }}</p>
+            <p><strong>Unique ID:</strong> {{ review.prn }}</p>
+            <p><strong>Email:</strong> {{ review.email }}</p>
+            <p><strong>Academics:</strong> {{ review.academics }}</p>
+            <button class="approve-button" onclick="showImage('{{ review.image_data }}')">View ID Proof</button>
+            <br>
+            <button  class="button-85" onclick="viewIDProof('{{ review._id }}')"  role="button" >View Images</button>
+            <button  class="button-85" onclick="viewVideo('{{ review._id }}')"  role="button" >View Video</button>
+            <p><strong>Placements:</strong> {{ review.placements }}</p>
+            <p><strong>Campus Life:</strong> {{ review.campus_life }}</p>
+            <p><strong>Infrastructure:</strong> {{ review.infrastructure }}</p>
+            <p><strong>Overall Summary:</strong> {{ review.summary }}</p>
+            <p><strong>Facilities:</strong> {{ review.facilities|join(", ") }}</p>
+            <p><strong>Overall Rating:</strong></p>
+            <div class="star-rating">
+                {% for _ in range(review.overall_rating) %}
+                    &#9733; <!-- Star character entity -->
+                {% endfor %}
+            </div>
+            
+            
+            <form action="/handle_review" method="POST" onsubmit="return handleReview()">
+                <br>
+                <input type="checkbox" name="identity_verified" value="verified" id="identityVerified" required style="transform: scale(1.5);cursor: pointer;">
+                <label style="font-size: 20px; ">Identity Verified</label>
+                <br>
+                <br>
+                <input type="hidden" name="review_id" value="{{ review._id }}">
+                <input type="hidden" name="recipient_email" value="{{ review.email }}">
+                
+                <button class="approve-button" type="submit" name="action" value="approve">Approve</button>
+            </form>
+            
+            <script>
+                function handleReview() {
+                    var confirmation = confirm("Warning: Are you sure you want to approve this review as it was already declined?");
+                    if (confirmation) {
+                        var action = document.activeElement.value;  // Get the value of the clicked button
+                        document.getElementsByName('action')[0].value = action;  // Set the form action based on the clicked button
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            </script>
+            
+          
+                
+            
+            
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- Modal for displaying image -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <br>
+        <a id="downloadLink" download>
+        <button class="download-button" id="downloadButton">
+            <i class="fa fa-download"></i>
+        </button>
+    </a>
+        <img class="modal-content" id="modalImage"> 
+        
+    </div>
+
+    <script>
+        // Show the modal with the image
+        // Show the modal with the image
+function showImage(imageData) {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const downloadLink = document.getElementById('downloadLink');
+    modal.style.display = 'block';
+    modalImage.src = "data:image/jpeg;base64, " + imageData;
+
+    // Set the href attribute of the download link to the image data
+    downloadLink.href = "data:image/jpeg;base64, " + imageData;
+    // Set the download attribute to specify the filename
+    downloadLink.download = "image.jpg";
+}
+
+// Close the modal
+function closeModal() {
+    const modal = document.getElementById('imageModal');
+    modal.style.display = 'none';
+}
+function viewVideo(reviewId)
+        {
+            window.location.href = '/video_approve?id=' + reviewId;
+        }
+    </script>
+</body>
+</html>

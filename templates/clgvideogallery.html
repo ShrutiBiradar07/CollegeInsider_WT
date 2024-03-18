@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colleges</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .search-container {
+            position: relative;
+            width: 300px; /* Set a specific width for the search box */
+            margin: 20px auto;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px 30px 10px 10px; /* Adjust padding to accommodate the clear icon */
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .clear-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            width: 80%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        li {
+            background-color: #fff;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h2>Get Ready for Virtual tour 🚌</h2>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for a college...">
+        <div class="clear-icon" onclick="clearSearch()">x</div>
+    </div>
+
+    <ul id="collegeList" style="cursor: pointer;">
+        {% for college in colleges %}
+            <li><a href="/videos/{{ college }}">{{ college }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function() {
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            ul = document.getElementById('collegeList');
+            li = ul.getElementsByTagName('li');
+
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName('a')[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = '';
+                } else {
+                    li[i].style.display = 'none';
+                }
+            }
+        });
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            var ul = document.getElementById('collegeList');
+            var li = ul.getElementsByTagName('li');
+
+            for (var i = 0; i < li.length; i++) {
+                li[i].style.display = '';
+            }
+        }
+    </script>
+</body>
+</html>

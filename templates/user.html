@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='Navbar1.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .thick-arrow {
+    font-size: 30px; /* Adjust the size as needed */
+    font-weight: bold; /* Increase the thickness */
+}
+</style>
+</head>
+
+<body>
+  <header class="header">
+    <img src="{{ url_for('static', filename='images/WT Website logo.png') }}" alt="Website Logo" style="margin-left: 50px; width: 100px;height: 70px;">
+    <nav class="navbar">
+      <a href="#">Home</a>
+      <a href="/about">About</a>
+      <a href="/get_reviews">Explore</a>
+      <a href="/share">Share</a>
+      <a href="/logout" class="btn">Logout</a>
+    </nav>
+  </header>
+
+  <!-- <div>
+    <h1>Find the best College with us</h1>
+  </div> -->
+
+  <div class="search-box">
+    <form action="/search_colleges" method="POST" role="search">
+      <label for="search">Search for colleges</label>
+      <input id="search" type="search" name="search_query" placeholder="Search..." autofocus required />
+      <button type="submit">Go</button>
+    </form>
+</div>
+
+
+  <div class="wrapper">
+    <i class="fa fa-angle-left fa-2x thick-arrow"></i>
+    <ul class="carousel">
+        {% for college in colleges %}
+        <li class="card">
+            <div class="img">
+              <img src="data:image/jpeg;base64, {{ college.college_images[0] }}">
+            </div>
+            <h2>{{ college.college }}</h2>
+            <span>{{ college.summary }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    <i class="fa fa-angle-right fa-2x thick-arrow"></i>
+</div>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>About Us</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" href="{{ url_for('static', filename='images/WT Website logo.png') }}" type="image/png">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      color: #333;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      width: 250px;
+      text-align: center;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s;
+      margin: 10px;
+    }
+
+    .card img {
+      max-width: 80%;
+      border-radius: 50%;
+    }
+
+    .card h2 {
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .social-icons {
+      font-size: 24px;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #333;
+      color: #fff;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .footer img {
+      max-width: 80px;
+      margin: 10px;
+    }
+
+    .footer-left, .footer-right {
+      flex: 1;
+      text-align: center;
+    }
+
+    .footer-right h3, .footer-left h5, .footer-right h5 {
+      margin: 5px;
+    }
+
+    .footer-right a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .card {
+        width: 80%;
+        margin: 10px auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Meet our Team</h1>
+  <div class="container">
+    <div class="card">
+      <img src="{{ url_for('static', filename='images/Aditya.jpg') }}" alt="Aditya Dhanwai">
+      <h2>Aditya Dhanwai</h2>
+      <p>Backend Engineer</p>
+      <p>Aditya is an experienced backend engineer with a passion for creating robust and scalable server-side solutions. He's a problem solver.</p>
+      <div class="social-icons">
+        <a href="https://www.linkedin.com/in/aditya-dhanwai-968684229/" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/_adii.tya23/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="{{ url_for('static', filename='images/Siddhesh.jpg') }}" alt="Siddhesh Patil">
+      <h2>Siddhesh Patil</h2>
+      <p>UI/UX Designer</p>
+      <p>Siddhesh is a creative UI/UX designer with an eye for detail. He enjoys crafting user-friendly interfaces and ensuring a seamless user experience.</p>
+      <div class="social-icons">
+        <a href="https://www.linkedin.com/in/siddhesh-patil-7652a325b/" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/iamsid_05/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="{{ url_for('static', filename='images/Rohit.jpg') }}" alt="Rohit Patil">
+      <h2>Rohit Patil</h2>
+      <p>Frontend Engineer</p>
+      <p>Rohit is a frontend engineer with a passion for building elegant and responsive web applications. He's skilled in HTML, CSS, and JavaScript.</p>
+      <div class="social-icons">
+        <a href="https://www.linkedin.com/in/rohit-patil-39811b218/" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/rohitpatil_44/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="{{ url_for('static', filename='images/Shruti.jpg') }}" alt="Shruti Biradar">
+      <h2>Shruti Biradar</h2>
+      <p>Frontend Engineer</p>
+      <p>Shruti is a frontend engineer who loves creating beautiful and user-friendly web interfaces. She's proficient in modern frontend technologies.</p>
+      <div class="social-icons">
+        <a href="https://www.linkedin.com/in/shruti-biradar-26004a229/" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/_shrutiii_ii_/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">
+      <img src="{{ url_for('static', filename='images/WT Website logo.png') }}" alt="Website Logo">
+    </div>
+    
+    <div class="footer-right">
+      <div class="website_detail">
+        <h3>College Insights</h3>
+        <h5>MIT Academy of Engineering</h5>
+        <h5>Alandi, Pune, Maharashtra</h5>
+        <h5>@2023 copyright - College Insights</h5>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

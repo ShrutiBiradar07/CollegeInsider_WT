@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    /* Styles for the gallery */
+    div.gallery {
+        position: relative;
+        border: 1px solid #ccc;
+        overflow: hidden;
+        height: 350px;
+    }
+
+    div.gallery:hover {
+        border: 3px solid #777;
+    }
+
+    div.gallery img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    div.desc {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .responsive {
+        box-sizing: border-box;
+        padding: 0 6px;
+        float: left;
+        width: 100%;
+        max-width: 33.3333%;
+    }
+
+    .clearfix:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* Styles for the modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 50px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.9);
+    }
+
+    .modal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 950px;
+    }
+
+    #caption {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+        text-align: center;
+        color: #fff;
+        padding: 10px 0;
+    }
+
+    .modal-content img {
+        width: 100%;
+        height: auto;
+    }
+
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 30px;
+        font-family: 'Arial', sans-serif;
+        color: #333;
+    }
+       
+@media screen and (max-width: 700px) {
+    .modal-content {
+        width: 90% !important;
+        max-width: none !important;
+    }
+    .modal-content img {
+        width: 100%;
+        height: 5000px;
+    }
+    .responsive {
+        box-sizing: border-box !important;
+        padding: 0 6px !important;
+        float: left !important;
+        width: 100% !important;
+        max-width: 100% !important; /* Adjusted max-width to maintain a 3-column layout */
+        background-color: black;
+    }
+    
+}
+
+</style>
+
+</head>
+<body>
+<br>
+    <h2>{{ review.college }} Images by {{review.reviewer_name}}</h2>
+<br>
+
+    {% for i in range(review.college_images|length) %}
+    {% if review.college_images[i] is not none %}
+        <div class="responsive">
+            <div class="gallery" onclick="openModal('{{ review.college_images[i] }}', '{{ review.captions[i] }}')">
+                <a href="#" >
+                    <img src="data:image/jpeg;base64, {{ review.college_images[i] }}" alt="College Image {{ i+1 }}" width="600" height="400">
+                </a>
+                <div class="desc">{{ review.captions[i] }}</div>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+        <img id="modalImage" src="" alt="Zoomed Image">
+        <div id="caption"></div>
+    </div>
+</div>
+
+<script>
+    // JavaScript functions for modal
+    function openModal(imageData, caption) {
+        var modal = document.getElementById('myModal');
+        var modalImage = document.getElementById('modalImage');
+        var captionText = document.getElementById('caption');
+
+        modal.style.display = 'block';
+
+        // Convert base64 image data to data URL
+        var dataUrl = 'data:image/jpeg;base64,' + imageData;
+
+        modalImage.src = dataUrl;
+        captionText.innerHTML = caption;
+    }
+
+    function closeModal() {
+        document.getElementById('myModal').style.display = 'none';
+    }
+</script>
+
+
+<div class="clearfix"></div>
+
+</body>
+</html>

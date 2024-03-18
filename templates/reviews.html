@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>College Reviews</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/WT Website logo.png') }}" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+       /* Add your CSS styles here */
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #f0f0f0; /* Choose the background color you prefer */
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+@keyframes glow {
+    0% {
+        border-color: #333;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    10% {
+        border-color: #ff0000;
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+    }
+    20% {
+        border-color: #ff6600;
+        box-shadow: 0 0 20px rgba(255, 102, 0, 0.8);
+    }
+    30% {
+        border-color: #ffcc00;
+        box-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
+    }
+    40% {
+        border-color: #00ff00;
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+    }
+    50% {
+        border-color: #00cc00;
+        box-shadow: 0 0 20px rgba(0, 204, 0, 0.8);
+    }
+    60% {
+        border-color: #0066ff;
+        box-shadow: 0 0 20px rgba(0, 102, 255, 0.8);
+    }
+    70% {
+        border-color: #9933ff;
+        box-shadow: 0 0 20px rgba(153, 51, 255, 0.8);
+    }
+    80% {
+        border-color: #cc66ff;
+        box-shadow: 0 0 20px rgba(204, 102, 255, 0.8);
+    }
+    90% {
+        border-color: #ff3399;
+        box-shadow: 0 0 20px rgba(255, 51, 153, 0.8);
+    }
+    100% {
+        border-color: #333;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.review-card {
+    cursor: grabbing;
+    border: solid 4px #333;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin: 20px;
+    width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #3498db, #856e7f);
+    color: #fff;
+    transition: transform 0.2s;
+    text-align: justify;
+    animation: glow 10s infinite; /* Adjust the duration and timing function as needed */
+}
+
+
+.review-card:hover {
+    transform: scale(1.02);
+}
+
+.review-card h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff; /* White text color for heading */
+}
+
+.review-card p {
+    margin: 8px 0;
+    color: rgba(0, 0, 0, 0.808); /* Lighter text color for paragraphs */
+    font-style: italic;
+}
+
+.star-rating {
+    color: #ffcc00; /* Bright yellow for star rating */
+    font-size: 24px;
+}
+
+.profile-icon {
+    font-size: 24px;
+    margin-right: 5px;
+}
+
+.para {
+    margin-bottom: 200px;
+}
+
+    </style>
+</head>
+<body>
+    <h1 align="center" style="font-style: italic;"> Trusted and Verified College Reviews</h1>
+    <div class="card-container">
+        {% for review in reviews %}
+        <div class="review-card">
+            <h2 align="center" style="color: black; margin-bottom: 20px;">{{ review.college }}</h2>
+            <p style="margin-bottom: 15px;"><i class="fa fa-user profile-icon"></i> Anonymous</p>
+            <p style="margin-bottom: 15px;"><strong style="font-size: 17px;">Academics:</strong> {{ review.academics }}</p>
+            <p style="margin-bottom: 15px;"><strong style="font-size: 17px;">Placements:</strong> {{ review.placements }}</p>
+            <p style="margin-bottom: 15px;"><strong style="font-size: 17px;">Campus Life:</strong> {{ review.campus_life }}</p>
+            <p style="margin-bottom: 15px;"><strong style="font-size: 17px;">Infrastructure:</strong> {{ review.infrastructure }}</p>
+            <p style="margin-bottom: 15px;"><strong style="font-size: 17px;">Overall Summary:</strong> {{ review.summary }}</p>
+            <p style="margin-bottom: 15px;"><strong style="font-size: 17px;">Facilities:</strong> {{ review.facilities|join(", ") }}</p>
+            <p><strong style="font-size: 20px;">Overall Rating:</strong></p>
+            <div class="star-rating">
+                {% for _ in range(review.overall_rating) %}
+                    &#9733; <!-- Star character entity -->
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

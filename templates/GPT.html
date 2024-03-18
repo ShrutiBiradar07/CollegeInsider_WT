@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Support</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/WT Website logo.png') }}" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.chat-container {
+    max-width: 100%;
+    height: 100vh;
+    margin: 0; /* Remove top and bottom margin */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+}
+
+.chat-header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.chat-body {
+    flex-grow: 1; /* Take up remaining space */
+    padding: 20px;
+    overflow-y: scroll;
+}
+
+.user-message {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}
+
+.bot-message {
+    background-color: #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}
+
+.chat-footer {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+}
+
+#userInput {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+#sendButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#clearButton i,
+        #backButton i {
+            font-size: 22px;
+            cursor: pointer;
+        }
+    .button{
+        margin-left: 10px;
+    }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">Chat Support</div>
+        <div class="chat-body" id="chatBody">
+            <!-- Chat messages will be displayed here -->
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="userInput" placeholder="Type a message...">
+            <button id="sendButton" onclick="sendMessage()">Send</button>
+            <button class="button" id="clearButton" onclick="clearChat()">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+            <button id="backButton" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+    </div>
+
+
+<script>
+    async function sendMessage() {
+        // Disable the send button
+        disableSendButton();
+
+        var userInput = document.getElementById('userInput').value;
+        appendUserMessage(userInput);
+
+        // Send the user message to the server
+        var response = await getResponse(userInput);
+
+        // Display the response from ChatGPT
+        appendBotMessage(response);
+
+        // Enable the send button after a delay (e.g., 10 seconds)
+        setTimeout(enableSendButton, 10000);
+
+        document.getElementById('userInput').value = '';
+    }
+
+    function disableSendButton() {
+        document.getElementById('sendButton').disabled = true;
+    }
+
+    function enableSendButton() {
+        document.getElementById('sendButton').disabled = false;
+    }
+
+    async function getResponse(message) {
+        try {
+            var response = await fetch('/chatgpt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message }),
+            });
+
+            var data = await response.json();
+            return data.response;
+        } catch (error) {
+            console.error('Error fetching response:', error);
+            return 'Error fetching response.';
+        }
+    }
+
+    function appendUserMessage(message) {
+        var chatBody = document.getElementById('chatBody');
+        var userMessageDiv = document.createElement('div');
+        userMessageDiv.className = 'user-message';
+        userMessageDiv.textContent = message;
+        chatBody.appendChild(userMessageDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function appendBotMessage(message) {
+        var chatBody = document.getElementById('chatBody');
+        var botMessageDiv = document.createElement('div');
+        botMessageDiv.className = 'bot-message';
+        botMessageDiv.textContent = message;
+        chatBody.appendChild(botMessageDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function clearChat() {
+            // Clear the chat history
+            var chatBody = document.getElementById('chatBody');
+            chatBody.innerHTML = '';
+        }
+
+        function goBack() {
+    // Implement your back button functionality here
+    alert('Take care!');
+    window.location.href = "/user";
+}
+    
+</script>
+
+</body>
+
+</html>

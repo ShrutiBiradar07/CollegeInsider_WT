@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+    <!-- ===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+    <title>Admin Dashboard</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/WT Website logo.png') }}" type="image/png">
+</head>
+<body >
+    <nav>
+        <div class="nav-bar" class="bg-img">
+            <i class='bx bx-menu sidebarOpen' ></i>
+            <img src="{{ url_for('static', filename='images/WT Website logo.png') }}" alt="Website Logo" style="margin-left: 50px; width: 65px;height: 50px;">
+            <div class="menu">
+                <div class="logo-toggle">
+                    <span class="logo"><a href="#">College Insider</a></span>
+                    <i class='bx bx-x siderbarClose'></i>
+                </div>
+
+                <ul class="nav-links">
+                    <!-- <li><a href="#">Home</a></li> -->
+                    <li><a href="/approve">Approve Reviews</a></li>
+                    <li><a href="/declined">Declined Reviews</a></li>
+                    <li><a href="/manage">Manage Reviwes</a></li>
+                    <li><a href="/adminlogout">Logout</a></li>
+                </ul>
+            </div>
+
+            <div class="darkLight-searchBox">
+                <div class="dark-light">
+                    <i class='bx bx-moon moon'></i>
+                    <i class='bx bx-sun sun'></i>
+                </div>
+
+                <form class="searchBox" action="/admin_search_colleges" method="POST">
+                    <div class="searchToggle">
+                        <i style="size: 100px;" class='bx bx-x cancel' onclick="clearSearch()"></i>
+                        <i class='bx bx-search search'></i>
+                    </div>
+                
+                    <div class="search-field">
+                        <input type="text" id="searchInput" name="search_query" placeholder="Search...">
+                        <i style="margin-right: 30px; size: 100px;" class='bx bx-x cancel' onclick="clearSearch()"></i>
+                        <i class='bx bx-search search' onclick="submitForm()"></i>
+                    </div>
+                </form>
+                
+                <script>
+                    function submitForm() {
+                        document.querySelector('.searchBox').submit();
+                    }
+                
+                    function clearSearch() {
+                        document.getElementById('searchInput').value = '';
+                    }
+                </script>
+                
+            </div>
+        </div>
+    </nav>
+    <style>
+         .full-screen-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: url("{{ url_for('static', filename='bg.jpg') }}") center/cover no-repeat;
+        }
+    </style>
+    <!-- <section class="full-screen-bg"></section> -->
+    <script src="{{ url_for('static', filename='home.js') }}">
+    </script>
+
+</body>
+</html>

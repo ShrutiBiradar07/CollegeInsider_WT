@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share your journey</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/WT Website logo.png') }}" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #b5e7e038;
+            border: 1px solid #0e0707;
+            border-radius: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+        }
+        /* Style for input fields */
+.input-field {
+    font-size: 18px;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #333;
+    width: 100%;
+}
+
+.input-field:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px #007BFF;
+}
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .star-rating i {
+            font-size: 24px;
+            color: #ccc; /* Default star color */
+            cursor: pointer;
+        }
+        .star-rating .selected {
+            color: #FFD700; /* Selected star color */
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+           
+        }
+        .checkbox-group div {
+            width: 50%;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        /* Add the button styles */
+        .button-64 {
+            align-items: center;
+            background-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
+            border: 0;
+            border-radius: 8px;
+            box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+            box-sizing: border-box;
+            color: #FFFFFF;
+            display: flex;
+            font-family: Phantomsans, sans-serif;
+            font-size: 20px;
+            justify-content: center;
+            line-height: 1em;
+            max-width: 100%;
+            min-width: 140px;
+            padding: 3px;
+            text-decoration: none;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .button-64:active,
+        .button-64:hover {
+            outline: 0;
+        }
+
+        .button-64 span {
+            background-color: rgb(5, 6, 45);
+            padding: 16px 24px;
+            border-radius: 6px;
+            width: 100%;
+            height: 100%;
+            transition: 300ms;
+        }
+        
+        .button-64:hover span {
+            background: none;
+        }
+        .TextArea {
+    font-size: 20px;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #333;
+    width: 100%;
+    resize: vertical; /* Allow vertical resizing of the text area */
+    min-height: 20px; /* Set a minimum height to accommodate content */
+}
+
+.TextArea:focus {
+    border-color: #0af331; /* Change border color on focus */
+    box-shadow: 0 0 5px #007BFF; /* Add a subtle shadow on focus */
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Share your valuable experience</h2>
+        <form action="/add_review" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="college">College Name:</label>
+                <input type="text" id="college" name="college" class="input-field" required>
+            </div>
+            <div class="form-group">
+                <label for="reviewer_name">Your Full Name:</label>
+                <input type="text" id="reviewer_name" name="reviewer_name" class="input-field" required>
+            </div>
+            <div class="form-group">
+                <label for="PRN">PRN/Unique Id</label>
+                <input type="number" id="PRN" name="PRN" class="input-field" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="input-field" required>
+            </div>
+            <div class="form-group">
+                <label for="image">ID Proof:</label>
+                <br>
+                <input type="file" id="image" name="image" accept="image/*" required>
+            </div>                        
+            <div class="form-group">
+                <label for="academics">Academics:</label>
+                <textarea class="TextArea" id="academics" name="academics" rows="2" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="placements">Placements:</label>
+                <textarea class="TextArea" id="placements" name="placements" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="campus_life">Campus Life:</label>
+                <textarea class="TextArea" id="campus_life" name="campus_life" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="infrastructure">Infrastructure:</label>
+                <textarea class="TextArea" id="infrastructure" name="infrastructure" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="detailreview">Summary:</label>
+                <textarea class="TextArea" id="detailreview" name="detailreview" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="image1">Image 1:</label>
+                <input type="file" id="image1" name="image1" accept="image/*" required>
+                <br>
+                <label for="caption1">Caption:</label>
+                <input type="text" id="caption1" name="caption1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="image2">Image 2:</label>
+                <input type="file" id="image2" name="image2" accept="image/*">
+                <br>
+                <label for="caption2">Caption:</label>
+                <input type="text" id="caption2" name="caption2">
+            </div>
+            
+            <div class="form-group">
+                <label for="image3">Image 3:</label>
+                <input type="file" id="image3" name="image3" accept="image/*">
+                <br>
+                <label for="caption3">Caption:</label>
+                <input type="text" id="caption3" name="caption3">
+            </div>
+            <!-- Add this inside your form -->
+        <div class="form-group">
+            <label for="video">Upload Video:</label>
+            <input type="file" id="video" name="video" accept="video/*">
+        </div>
+
+            <style>
+                .dropdown {
+                    position: relative;
+                    display: inline-block;
+                }
+            
+                .dropdown-content {
+                    display: none;
+                    position: absolute;
+                    background-color: #f9f9f9;
+                    min-width: 160px;
+                    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+                    padding: 12px;
+                    z-index: 1;
+                }
+
+                .dropdown:hover .dropdown-content {
+                    display: block;
+                }
+                
+            
+            </style>
+            
+            <div class="form-group dropdown">
+                <label for="facilities">Facilities:</label>
+                <div class="dropdown-content">
+                    <input type="checkbox" id="wifi" name="facilities[]" value="Wi-Fi">
+                    <label for="wifi">Wi-Fi</label>
+            
+                    <input type="checkbox" id="filteredWater" name="facilities[]" value="Filtered Water">
+                    <label for="filteredWater">Filtered Water</label>
+            
+                    <input type="checkbox" id="library" name="facilities[]" value="Library">
+                    <label for="library">Library</label>
+            
+                    <input type="checkbox" id="gym" name="facilities[]" value="Gym">
+                    <label for="gym">Gym</label>
+            
+                    <input type="checkbox" id="cafeteria" name="facilities[]" value="Cafeteria">
+                    <label for="cafeteria">Cafeteria</label>
+            
+                </div>
+            </div>
+            
+
+            
+            <div class="form-group">
+                <label for="overall_rating">Overall Rating:</label>
+                <br>
+                <div class="star-rating">
+                    <i class="fas fa-star" data-rating="1"></i>
+                    <i class="fas fa-star" data-rating="2"></i>
+                    <i class="fas fa-star" data-rating="3"></i>
+                    <i class="fas fa-star" data-rating="4"></i>
+                    <i class="fas fa-star" data-rating="5"></i>
+                </div>
+                <input type="hidden" name="overall_rating" id="overall_rating" value="0">
+                <span id="rating-text"></span>
+            </div>
+            <script>
+                // Get all the star elements
+                const stars = document.querySelectorAll('.star-rating i');
+                const ratingText = document.getElementById('rating-text');
+                
+                // Define text for each rating
+                const ratingTextMap = {
+                    '1': 'Poor :(',
+                    '2': 'Below Average',
+                    '3': 'Average ✨',
+                    '4': 'Good :)',
+                    '5': 'Excellent 💖'
+                };
+            
+                // Function to handle star selection
+                function handleStarSelection(event) {
+                    const selectedRating = parseInt(event.target.getAttribute('data-rating'));
+                    document.getElementById('overall_rating').value = selectedRating;
+            
+                    // Display corresponding text based on the selected rating
+                    ratingText.textContent = ratingTextMap[selectedRating];
+            
+                    // Loop through all stars and update their appearance
+                    stars.forEach((star) => {
+                        const starRating = parseInt(star.getAttribute('data-rating'));
+                        if (starRating <= selectedRating) {
+                            star.classList.add('selected');
+                        } else {
+                            star.classList.remove('selected');
+                        }
+                    });
+                }
+            
+                // Attach click event listeners to stars
+                stars.forEach((star) => {
+                    star.addEventListener('click', handleStarSelection);
+                });
+            </script>
+            
+            <button class="button-64" type="submit"><span>Submit Review</span></button>
+        </form>
+    </div>
+</body>
+</html>

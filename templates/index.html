@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!-- === Coding by CodingLab | www.codinglabweb.com === -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='sliding.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+    <!-- ===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+    <title>Welcome</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/WT Website logo.png') }}" type="image/png">
+
+</head>
+<body>
+    <nav>
+        <div class="nav-bar">
+            <i class='bx bx-menu sidebarOpen' ></i>
+            <img src="{{ url_for('static', filename='images/WT Website logo.png') }}" alt="Website Logo" style="margin-left: 50px; width: 65px;height: 50px;">
+            <div class="menu">
+                <div class="logo-toggle">
+                    <span class="logo"><a href="#">College Insider</a></span>
+                    <i class='bx bx-x siderbarClose'></i>
+                </div>
+
+                <ul class="nav-links">
+                    <li><a href="/about">About</a></li>
+                    <li><a  class="bounce-link" href="/get_reviews">Explore</a></li>
+                    <li><a href="/share">Share</a></li>
+                    <li><a href="/analysis">Analysis</a></li>
+                    <li><a href="/colleges">Gallery</a></li>
+                    <li><a href="/virtual_tour">Virtual Tour</a></li>
+                    <li><a href="/chat">Help</a></li>
+                    <li><a href="/login">Login</a></li>
+                </ul>
+            </div>
+
+            <div class="darkLight-searchBox">
+                <div class="dark-light">
+                    <i class='bx bx-moon moon'></i>
+                    <i class='bx bx-sun sun'></i>
+                </div>
+
+                <form class="searchBox" action="/search_colleges" method="POST">
+                   <div class="searchToggle">
+                    <i class='bx bx-x cancel'></i>
+                    <i class='bx bx-search search'></i>
+                   </div>
+
+                    <div class="search-field">
+                        <input type="text" id="searchInput" name="search_query" placeholder="Search...">
+                        <i style="margin-right: 30px; size: 100px;" class='bx bx-x cancel' onclick="clearSearch()"></i>
+                        <i class='bx bx-search search' onclick="submitForm()"></i>
+                    </div>
+                    
+                </form>
+                <script>
+                    function submitForm() {
+                        document.querySelector('.searchBox').submit();
+                    }
+                
+                    function clearSearch() {
+                        document.getElementById('searchInput').value = '';
+                    }
+                </script>
+            </div>
+        </div>
+    </nav>
+
+    <script src="{{ url_for('static', filename='home.js') }}">
+    </script>
+<div class="wrapper">
+    <i id="left" class="fa fa-angle-left fa-2x thick-arrow"></i>
+    <ul class="carousel">
+        {% for college in colleges %}
+        <li class="card">
+            <div class="img" style="margin: 20px; align-items: center;">
+                <img src="data:image/jpeg;base64, {{ college.college_images[0] }}">
+            </div>
+            <h2 style="margin: 20px; font-size: 20px;">{{ college.college }}</h2>
+            <span style="margin: 20px; font-size: 15px;">{{ college.summary }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    <i id="right" class="fa fa-angle-right fa-2x thick-arrow"></i>
+</div>
+  <script src="{{ url_for('static', filename='sliding.js') }}"></script>
+</body>
+</html>
